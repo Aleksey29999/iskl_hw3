@@ -8,10 +8,10 @@ import java.util.Scanner;
 //import static sun.nio.fs.AbstractFileSystemProvider.split;
 
 public class Main {
-    public static String fio;
-    public static String tell;
-    public static String data;
-    public static String fm;
+//    public static String fio;
+//    public static String tell;
+//    public static String data;
+//    public static String fm;
 
     public static void main(String[] args) {
 
@@ -35,7 +35,7 @@ public class Main {
         if (words.length != 3) {
             throw new RuntimeException("Неверный формат ввода");
         }
-        System.out.println("Строка: " + fio);
+        System.out.println("Фамилия Имя Отчество : " + fio);
 
         return fio;
     }
@@ -43,18 +43,18 @@ public class Main {
     static String dataInput() {
         System.out.print("введите дату рождения дд.мм.гггг: ");
         Scanner inData = new Scanner(System.in);
-        data = inData.next();
+        String data = inData.next();
         if ((data.length() == 0)) {
             throw new RuntimeException("Пустые строки вводить нельзя");
         }
-        System.out.println("Строка: " + data);
+        System.out.println("Дата рождения: " + data);
         return data;
     }
 
     static String tellInput() {
         System.out.print("введите номер телефона без +7");
         Scanner inTell = new Scanner(System.in);
-        tell = inTell.next();
+        String tell = inTell.next();
         if ((tell.length() != 10)) {
             throw new RuntimeException("неверный формат ввода");
         }
@@ -65,7 +65,7 @@ public class Main {
     static String fmInput() {
         System.out.print("введите пол  f или m");
         Scanner inFm = new Scanner(System.in);
-        fm = inFm.next();
+        String fm = inFm.next();
         if (fm.equals("f") | fm.equals("m")) {
             System.out.println("Пол: " + fm);
         } else {
@@ -80,10 +80,10 @@ public class Main {
 //        String filename = Paths.get(words[0]);
         try (FileWriter fileWriter = new FileWriter(words[0], false)) {
 
-            fileWriter.write(fio1 + "\n");
-            fileWriter.write(data1 + "\n");
-            fileWriter.write(tell1 + "\n");
-            fileWriter.write(fm1 + "\n");
+            fileWriter.write("Фамилия Имя Отчество: " + fio1 + "\n");
+            fileWriter.write("Дата рождения :" + data1 + "\n");
+            fileWriter.write("Номер телефона: +7" + tell1 + "\n");
+            fileWriter.write("пол: "+fm1 + "\n");
             fileWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
