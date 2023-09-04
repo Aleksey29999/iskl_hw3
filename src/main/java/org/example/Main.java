@@ -2,21 +2,19 @@ package org.example;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
-//import static sun.nio.fs.AbstractFileSystemProvider.split;
+
 
 public class Main {
-//    public static String fio;
-//    public static String tell;
-//    public static String data;
-//    public static String fm;
+
 
     public static void main(String[] args) {
 
         String fio1 = fioInput();
-        String data1 = dataInput();
+        Date data1 = dataInput();
         String tell1 = tellInput();
         String fm1 = fmInput();
 
@@ -40,26 +38,50 @@ public class Main {
         return fio;
     }
 
-    static String dataInput() {
-        System.out.print("введите дату рождения дд.мм.гггг: ");
-        Scanner inData = new Scanner(System.in);
-        String data = inData.next();
-        if ((data.length() == 0)) {
-            throw new RuntimeException("Пустые строки вводить нельзя");
+    static Date dataInput() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("введите дату рождения дд.мм.гггг: ");
+        String data = scanner.next();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date parsingDate=null;
+        try {
+            parsingDate = dateFormat.parse(data);
+            System.out.println("Дата рождения: " + parsingDate);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        System.out.println("Дата рождения: " + data);
-        return data;
+        return parsingDate;
     }
+
+//        System.out.print("введите дату рождения дд.мм.гггг: ");
+//        Scanner inData = new Scanner(System.in);
+//        String data = inData.next();
+//        if ((data.length() == 0)) {
+//            throw new RuntimeException("Пустые строки вводить нельзя");
+//        }
+//        System.out.println("Дата рождения: "+data);
+//        return data;
+//}
+
 
     static String tellInput() {
         System.out.print("введите номер телефона без +7");
+
         Scanner inTell = new Scanner(System.in);
-        String tell = inTell.next();
-        if ((tell.length() != 10)) {
-            throw new RuntimeException("неверный формат ввода");
+        int tell = 0;
+        try {
+            tell = inTell.nextInt();
+            System.out.println("телефон: +7" + tell);
+            if ((String.valueOf(tell).length() != 10)) {
+                throw new RuntimeException("неверный формат ввода, номер телефона должен содержать только 10 цифр");
+            }
+        } catch (RuntimeException e) {
+//            System.out.println("неверный формат ввода, номер телефона должен содержать только цифры");
+            throw new NumberFormatException("неверный формат ввода, номер телефона должен содержать только цифры");
         }
-        System.out.println("телефон: +7" + tell);
-        return tell;
+        return String.valueOf(tell);
+
     }
 
     static String fmInput() {
@@ -74,23 +96,22 @@ public class Main {
         return fm;
     }
 
-    static void filecreate(String fio1, String data1, String tell1, String fm1) {
+    static void filecreate(String fio1, Date data1, String tell1, String fm1) {
+
 
         String[] words = fio1.split(" ");
-//        String filename = Paths.get(words[0]);
         try (FileWriter fileWriter = new FileWriter(words[0], false)) {
 
             fileWriter.write("Фамилия Имя Отчество: " + fio1 + "\n");
             fileWriter.write("Дата рождения :" + data1 + "\n");
             fileWriter.write("Номер телефона: +7" + tell1 + "\n");
-            fileWriter.write("пол: "+fm1 + "\n");
+            fileWriter.write("пол: " + fm1 + "\n");
             fileWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
     }
 }
